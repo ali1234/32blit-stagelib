@@ -67,11 +67,14 @@ class Fade : public Timed {
 class Modal : public Stage {
     public:
         Modal(StagePtr background, bool update_background)
-                : Stage(), background(background), update_background(update_background) {}
+                : Stage(), previous(background), background(background), update_background(update_background) {}
+        Modal(StagePtr previous, StagePtr background, bool update_background)
+                : Stage(), previous(previous), background(background), update_background(update_background) {}
 
         void update(uint32_t time, ButtonState buttons) override;
         void render() override;
     protected:
+        StagePtr previous;
         StagePtr background;
         bool update_background;
 };
