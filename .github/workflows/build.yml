@@ -41,7 +41,7 @@ jobs:
           - os: ubuntu-20.04
             name: Emscripten
             release-suffix: WEB
-            cmake-args: -D32BLIT_DIR=$GITHUB_WORKSPACE/32blit-sdk
+            cmake-args: -D32BLIT_DIR=$GITHUB_WORKSPACE/32blit-sdk -DStageLib_DIR=$GITHUB_WORKSPACE/main
             cmake-prefix: emcmake
             apt-packages: python3-setuptools
 

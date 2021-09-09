@@ -1,0 +1,10 @@
+title: StageLib Example
+description: Example demonstrating StageLib
+author: Alistair Buxton
+splash:
+  file: assets/no-image.png
+icon:
+  file: assets/no-icon.png
+version: v0.0.1
+category: utility # game, demo, utility, ...
+url: https://github.com/ali1234/32blit-stagelib

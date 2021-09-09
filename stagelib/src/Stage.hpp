@@ -1,0 +1,77 @@
+#pragma once
+
+#include <memory>
+#include "ButtonState.hpp"
+
+class Stage;
+
+typedef std::shared_ptr<Stage> StagePtr;
+
+class Stage : public std::enable_shared_from_this<Stage> {
+    public:
+        Stage() {_count++;}
+        virtual ~Stage() {_count--;}
+
+        static int count() {return _count;}
+
+        virtual void update(uint32_t, ButtonState) {};
+        virtual void render() {};
+
+        StagePtr next();
+        bool finished() const;
+        bool changed() const;
+
+    protected:
+        void finish(StagePtr next);
+        void change(StagePtr next);
+
+    private:
+        bool _finished = false;
+        bool _changed = false;
+        StagePtr _next = nullptr;
+        inline static int _count = 0;
+};
+
+
+class Timed : public Stage {
+    public:
+        Timed(uint32_t duration) : Stage(), duration(duration) {};
+
+        void update(uint32_t time, ButtonState buttons) override;
+
+    protected:
+        bool expired() const;
+        float progress() const;
+
+        uint32_t duration, elapsed = 0;
+};
+
+
+class Fade : public Timed {
+    public:
+        Fade(StagePtr a, StagePtr b, uint32_t duration=250, blit::Pen color=blit::Pen(0, 0, 0))
+                : Timed(duration/2), a(a), b(b), color(color) {}
+        Fade(StagePtr a, StagePtr b, blit::Pen color, uint32_t duration=250)
+                : Fade(a, b, duration, color) {}
+
+        void update(uint32_t time, ButtonState buttons) override;
+        void render() override;
+
+    protected:
+        StagePtr a, b;
+        blit::Pen color;
+        bool direction = false;
+};
+
+
+class Modal : public Stage {
+    public:
+        Modal(StagePtr background, bool update_background)
+                : Stage(), background(background), update_background(update_background) {}
+
+        void update(uint32_t time, ButtonState buttons) override;
+        void render() override;
+    protected:
+        StagePtr background;
+        bool update_background;
+};
