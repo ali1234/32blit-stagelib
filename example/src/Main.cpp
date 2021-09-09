@@ -1,5 +1,5 @@
 // StageLib example - Main.cpp
-// Copyright (c) 2021 Alistair Buxton <a.j.buxton@gmail.com>. All rights reserved.
+// Copyright (c) 2021 Alistair Buxton <a.j.buxton@gmail.com>
 
 #include <cinttypes>
 #include <cstring>
