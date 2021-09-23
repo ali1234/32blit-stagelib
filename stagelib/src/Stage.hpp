@@ -14,8 +14,8 @@ class Stage : public std::enable_shared_from_this<Stage> {
 
         static int count() {return _count;}
 
-        virtual void update(uint32_t, ButtonState) {};
-        virtual void render() {};
+        virtual void update(uint32_t, ButtonState) {}
+        virtual void render() {}
 
         StagePtr next();
         bool finished() const;
@@ -35,7 +35,7 @@ class Stage : public std::enable_shared_from_this<Stage> {
 
 class Timed : public Stage {
     public:
-        Timed(uint32_t duration) : Stage(), duration(duration) {};
+        Timed(uint32_t duration) : Stage(), duration(duration) {}
 
         void update(uint32_t time, ButtonState buttons) override;
 
