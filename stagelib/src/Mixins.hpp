@@ -6,10 +6,10 @@ class Positioned {
     public:
         Positioned(int x, int y, int w, int h) : position(x, y, w, h) {}
 
-        void top(int y) {position.y = y;}
-        void bottom(int y) {position.y = 240 - y - position.h;}
-        void left(int x) {position.x = x;}
-        void right(int x) {position.x = 320 - x - position.w;}
+        void top(int y) { position.y = y; }
+        void bottom(int y) { position.y = 240 - y - position.h; }
+        void left(int x) { position.x = x; }
+        void right(int x) { position.x = 320 - x - position.w; }
 
     protected:
         blit::Rect position;
