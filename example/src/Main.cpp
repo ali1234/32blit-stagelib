@@ -4,29 +4,35 @@
 #include <cinttypes>
 #include <cstring>
 
+#ifndef NDEBUG
 #ifdef TARGET_32BLIT_HW // For mallinfo
 #include <malloc.h>
 #endif
+#endif
 
 #include "32blit.hpp"
-#include "engine/version.hpp"
 
 #include "Stage.hpp"
 #include "StageExample.hpp"
+
+#ifndef NDEBUG
+#include "engine/version.hpp"
 #include "FancyText.hpp"
 
+uint32_t utime = 0, rtime = 0;
+blit::GameMetadata metadata;
+#endif
 
 static ButtonState buttons;
 static uint32_t prev_update;
 
 static StagePtr stage = nullptr;
 
-uint32_t utime = 0, rtime = 0;
-
-blit::GameMetadata metadata;
 
 void init() {
+#ifndef NDEBUG
     metadata = blit::get_metadata();
+#endif
     blit::set_screen_mode(blit::ScreenMode::hires);
     stage = std::make_shared<Fade>(std::make_shared<Stage>(), std::make_shared<StageExample>());
     buttons.update(blit::buttons);
@@ -48,22 +54,32 @@ void update(uint32_t /*time*/) {
         stage->update(time_delta, buttons);
         if (stage->changed()) stage = stage->next();
         prev_update = time;
+#ifndef NDEBUG
         utime = blit::now() - time;
+#endif
     }
 }
 
 void render(uint32_t /* time */) {
+#ifndef NDEBUG
     char message[80];
     uint32_t before = blit::now();
-    stage->render();
-    uint32_t after = blit::now();
-    rtime = after - before;
+#endif
 
+    stage->render();
+
+#ifndef NDEBUG
+    rtime = blit::now() - before;
 #ifdef TARGET_32BLIT_HW
     struct mallinfo mi = mallinfo();
-    sprintf(message, "%s U:%3" PRIu32 "ms R:%3" PRIu32 "ms H:%5d U:%5d F:%5d S:%d", metadata.version, utime, rtime, mi.arena>>0, mi.uordblks>>0, mi.fordblks>>0, Stage::count());
+    sprintf(message, "%s U:%3" PRIu32 "ms R:%3" PRIu32 "ms H:%5d U:%5d F:%5d S:%d (%d)",
+            metadata.version, utime, rtime, mi.arena>>0, mi.uordblks>>0, mi.fordblks>>0,
+            Stage::count(), Stage::all_time_count());
 #else
-    sprintf(message, "%s %s - U:%3" PRIu32 "ms R:%3" PRIu32 "ms S:%d", metadata.title, metadata.version, utime, rtime, Stage::count());
+    sprintf(message, "%s %s - U:%3" PRIu32 "ms R:%3" PRIu32 "ms S:%d (%d)",
+            metadata.title, metadata.version, utime, rtime,
+            Stage::count(), Stage::all_time_count());
 #endif
     fancy_text_fixed(message, blit::Point(7, 228%16));
+#endif
 }
