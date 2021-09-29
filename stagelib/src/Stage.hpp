@@ -12,10 +12,11 @@ typedef std::shared_ptr<Stage> StagePtr;
 
 class Stage : public std::enable_shared_from_this<Stage> {
     public:
-        Stage() { _count++; }
+        Stage() { _count++; _all_time_count++;}
         virtual ~Stage() { _count--; }
 
         static int count() { return _count; }
+        static int all_time_count() { return _all_time_count; }
 
         virtual void update(uint32_t, ButtonState) {}
         virtual void render() {}
@@ -33,6 +34,7 @@ class Stage : public std::enable_shared_from_this<Stage> {
         bool _changed = false;
         StagePtr _next = nullptr;
         inline static int _count = 0;
+        inline static int _all_time_count = 0;
 };
 
 
