@@ -14,7 +14,7 @@ on:
     types: [created]
 
 env:
-  BUILD_TYPE: Release
+  BUILD_TYPE: MinSizeRel
   EM_VERSION: 2.0.18 # Emscripten version
   EM_CACHE_FOLDER: 'emsdk-cache' # Cache for Emscripten libs
 
