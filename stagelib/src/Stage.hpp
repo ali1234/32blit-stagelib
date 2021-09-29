@@ -1,3 +1,6 @@
+// StageLib - Stage.hpp
+// Copyright (c) 2021 Alistair Buxton <a.j.buxton@gmail.com>
+
 #pragma once
 
 #include <memory>
@@ -73,6 +76,7 @@ class Modal : public Stage {
 
         void update(uint32_t time, ButtonState buttons) override;
         void render() override;
+
     protected:
         StagePtr previous;
         StagePtr background;

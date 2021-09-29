@@ -1,3 +1,6 @@
+// StageLib - ButtonState.hpp
+// Copyright (c) 2021 Alistair Buxton <a.j.buxton@gmail.com>
+
 #pragma once
 
 #include "32blit.hpp"
