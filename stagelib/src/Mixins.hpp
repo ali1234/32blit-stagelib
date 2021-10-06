@@ -10,9 +10,9 @@ class Positioned {
         Positioned(int x, int y, int w, int h) : position(x, y, w, h) {}
 
         void top(int y) { position.y = y; }
-        void bottom(int y) { position.y = 240 - y - position.h; }
+        void bottom(int y) { position.y = blit::screen.bounds.h - y - position.h; }
         void left(int x) { position.x = x; }
-        void right(int x) { position.x = 320 - x - position.w; }
+        void right(int x) { position.x = blit::screen.bounds.w - x - position.w; }
 
     protected:
         blit::Rect position;
