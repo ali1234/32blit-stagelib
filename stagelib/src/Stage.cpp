@@ -74,6 +74,9 @@ void Fade::render() {
     }
 }
 
+bool Fade::message(Message &msg, uint16_t len) {
+    return b->message(msg, len);
+}
 
 void Modal::update(uint32_t time, ButtonState /* buttons */) {
     if (!finished()) {

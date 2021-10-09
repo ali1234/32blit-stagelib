@@ -7,6 +7,7 @@
 #include "ButtonState.hpp"
 
 class Stage;
+class Message;
 
 typedef std::shared_ptr<Stage> StagePtr;
 
@@ -20,6 +21,7 @@ class Stage : public std::enable_shared_from_this<Stage> {
 
         virtual void update(uint32_t, ButtonState) {}
         virtual void render() {}
+        virtual bool message(Message &, uint16_t) { return false; }
 
         StagePtr next();
         bool finished() const;
@@ -61,6 +63,7 @@ class Fade : public Timed {
 
         void update(uint32_t time, ButtonState buttons) override;
         void render() override;
+        bool message(Message &, uint16_t) override;
 
     protected:
         StagePtr a, b;
