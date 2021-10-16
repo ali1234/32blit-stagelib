@@ -80,7 +80,7 @@ class Message {
         // Convenience function for sending a UserMessage with a single data item.
         template<typename T>
         static void send(UserMessage t, T data) {
-            uint8_t *buffer[sizeof(Message) + sizeof(T)];
+            uint8_t buffer[sizeof(Message) + sizeof(T)];
             auto *msg = new(buffer) Message(t);
             msg->data<T>() = data;
             msg->send(sizeof(T));
@@ -89,7 +89,7 @@ class Message {
         // Convenience function for sending a UserMessage with an array of N items.
         template<typename T, int N>
         static void send(UserMessage t, const T *data) {
-            uint8_t *buffer[sizeof(Message) + (sizeof(T) * N)];
+            uint8_t buffer[sizeof(Message) + (sizeof(T) * N)];
             auto *msg = new(buffer) Message(t);
             memcpy((void *)msg->data(), data, sizeof(T) * N);
             msg->send(sizeof(T) * N);
@@ -112,7 +112,7 @@ class Message {
         // Convenience function for sending a SystemMessage with a single data item.
         template<typename T>
         static void send(SystemMessage s, T data) {
-            uint8_t *buffer[sizeof(Message) + sizeof(T)];
+            uint8_t buffer[sizeof(Message) + sizeof(T)];
             auto *msg = new(buffer) Message(s);
             msg->data<T>() = data;
             msg->send(sizeof(T));
