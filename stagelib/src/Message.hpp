@@ -205,7 +205,7 @@ class Message {
 
     private:
 
-        static bool error(ErrorState e) {
+        bool error(ErrorState e) {
             if (e == ErrorState::None) return false;
             print_error(e, "Error:");
             if (e != last_error) {
@@ -228,14 +228,14 @@ class Message {
 
     private:
 
-        static void print_error([[maybe_unused]] ErrorState e, [[maybe_unused]] const char *message) {
+        void print_error([[maybe_unused]] ErrorState e, [[maybe_unused]] const char *message) const {
 #ifndef NDEBUG
             if (message) printf("%s ", message);
             switch(e) {
                 case ErrorState::None:
                     break;
                 case ErrorState::OutOfSeqUserMsg:
-                    printf("Illegal UserMessage while unpaired!\n");
+                    printf("Illegal UserMessage while unpaired! (%d)\n", (uint8_t)_usr);
                     break;
                 case ErrorState::PeerSignal:
                     printf("Peer signalled error!\n");
